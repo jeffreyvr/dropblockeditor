@@ -85,7 +85,7 @@ class MakeBlockCommand extends Command
                 'name' => Str::studly($this->argument('name')),
             ]));
 
-            $this->error("Edit component created at: {$blockEditComponentPath}");
+            $this->info("Edit component created at: {$blockEditComponentPath}");
         }
 
         return self::SUCCESS;
