@@ -20,10 +20,8 @@ class ExampleButton extends Component
     public function save()
     {
         // Example of getting a json string of the active blocks.
-        $activeBlocks = collect($this->editor['activeBlocks'])
-            ->toJson();
-
-        dump($activeBlocks);
+        // $activeBlocks = collect($this->editor['activeBlocks'])
+        //     ->toJson();
     }
 
     public function render()
