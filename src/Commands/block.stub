@@ -1,0 +1,19 @@
+<?php
+
+namespace [namespace];
+
+use Jeffreyvr\DropBlockEditor\Blocks\Block;
+
+class [name] extends Block
+{
+    public $title = '[name]';
+
+    public $data = [];
+
+    public function render()
+    {
+        return <<<'blade'
+            <div></div>
+        blade;
+    }
+}

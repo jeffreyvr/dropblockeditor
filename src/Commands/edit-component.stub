@@ -1,0 +1,15 @@
+<?php
+
+namespace [namespace];
+
+use Jeffreyvr\DropBlockEditor\Components\BlockEditComponent;
+
+class [name] extends BlockEditComponent
+{
+    public function render()
+    {
+        return <<<'blade'
+            <div></div>
+        blade;
+    }
+}

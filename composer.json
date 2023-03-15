@@ -1,0 +1,75 @@
+{
+    "name": "jeffreyvanrossum/dropblockeditor",
+    "description": "A simple block editor made with Livewire.",
+    "keywords": [
+        "jeffreyvanrossum",
+        "laravel",
+        "dropblockeditor"
+    ],
+    "homepage": "https://github.com/jeffreyvanrossum/dropblockeditor",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeffrey van Rossum",
+            "email": "jeffrey@vanrossum.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0|^8.1",
+        "illuminate/contracts": "^9.0|^10.0",
+        "livewire/livewire": "^2.10",
+        "spatie/laravel-package-tools": "^1.13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0.1",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "spatie/laravel-ray": "^1.28",
+        "spatie/x-ray": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jeffreyvr\\DropBlockEditor\\": "src",
+            "Jeffreyvr\\DropBlockEditor\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jeffreyvr\\DropBlockEditor\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jeffreyvr\\DropBlockEditor\\DropBlockEditorServiceProvider"
+            ],
+            "aliases": {
+                "DropBlockEditor": "Jeffreyvr\\DropBlockEditor\\Facades\\DropBlockEditor"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
