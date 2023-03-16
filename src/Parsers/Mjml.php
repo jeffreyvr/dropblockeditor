@@ -28,7 +28,7 @@ class Mjml extends Parser implements ParserInterface
                     $view = $this->prepareBlockForEditor(['id' => $key, 'blockHtml' => $view]);
                 }
 
-                return Blade::render($view, $block['data']);
+                return Blade::render($view, $block->getData());
             })
             ->values();
 

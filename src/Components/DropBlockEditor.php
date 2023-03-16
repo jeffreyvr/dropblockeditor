@@ -160,7 +160,8 @@ class DropBlockEditor extends Component
             return false;
         }
 
-        return Block::fromName($this->activeBlocks[$this->activeBlockIndex]['class']);
+        return Block::fromName($this->activeBlocks[$this->activeBlockIndex]['class'])
+            ->data($this->activeBlocks[$this->activeBlockIndex]['data']);
     }
 
     public function mount()
@@ -178,11 +179,13 @@ class DropBlockEditor extends Component
 
     public function reorder($ids)
     {
-        return collect($ids)
+        $this->activeBlocks = collect($ids)
             ->map(function ($id) {
                 return $this->activeBlocks[$id];
             })
             ->all();
+
+        $this->emit('editorIsUpdated', $this->updateProperties());
     }
 
     public function insertBlock($id, $index = null, $placement = null)
@@ -211,15 +214,20 @@ class DropBlockEditor extends Component
         return "{$activeBlockIndex}-{$this->hash}";
     }
 
+    public function updateProperties(): array
+    {
+        return [
+            'result' => $this->result,
+            'activeBlocks' => $this->activeBlocks
+        ];
+    }
+
     public function render()
     {
         $this->process();
 
         if (! $this->initialRender) {
-            $this->emit('editorIsUpdated', [
-                'result' => $this->result,
-                'activeBlocks' => $this->activeBlocks,
-            ]);
+            $this->emit('editorIsUpdated', $this->updateProperties());
         }
 
         $this->initialRender = false;
