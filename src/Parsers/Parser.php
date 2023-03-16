@@ -2,6 +2,8 @@
 
 namespace Jeffreyvr\DropBlockEditor\Parsers;
 
+use Illuminate\Support\Facades\Blade;
+
 abstract class Parser
 {
     public $output;
@@ -84,6 +86,15 @@ abstract class Parser
 
     public function dropPlaceholderHtml()
     {
-        return '<div drop-placeholder class="h-full min-h-[200px] text-base text-gray-600 text-lg flex items-center justify-center"><p>'.__('Drop your block here...').'</p></div>';
+        return '<div drop-placeholder class="h-full min-h-[200px] text-gray-600 text-lg flex items-center justify-center"><p>'.__('Drop your block here...').'</p></div>';
+    }
+
+    public function createBaseView($attributes)
+    {
+        if (view()->exists($this->base)) {
+            view($this->base, $attributes)->render();
+        }
+
+        return Blade::render($this->base, $attributes);
     }
 }

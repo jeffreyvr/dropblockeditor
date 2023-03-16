@@ -36,7 +36,7 @@ class Mjml extends Parser implements ParserInterface
             $content = $blocks->implode("\n");
         }
 
-        $content = view($this->base, ['slot' => $content])->render();
+        $content = $this->createBaseView(['slot' => $content]);
 
         $process = new Process([
             config('dropblockeditor.node_binary'),
