@@ -36,7 +36,7 @@
                     </button>
                 </div>
                 @foreach($buttons as $i => $button)
-                    @livewire($button, ['editor' => $this->updateProperties()], key('button-' . $i))
+                    @livewire($button, $this->updateProperties(), key('button-' . $i))
                 @endforeach
             </div>
         </div>
