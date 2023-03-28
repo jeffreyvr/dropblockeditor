@@ -36,17 +36,17 @@ class DropBlockEditor extends Component
         'refreshComponent' => '$refresh',
     ];
 
-    public function canUndo()
+    public function canUndo(): bool
     {
         return $this->historyIndex > 0;
     }
 
-    public function canRedo()
+    public function canRedo(): bool
     {
         return $this->historyIndex < count($this->history) - 1;
     }
 
-    public function undo()
+    public function undo(): void
     {
         if (! $this->canUndo()) {
             return;
@@ -56,10 +56,15 @@ class DropBlockEditor extends Component
 
         $this->activeBlocks = $this->history[$this->historyIndex]['activeBlocks'];
         $this->activeBlockIndex = $this->history[$this->historyIndex]['activeBlockIndex'];
+        $this->updateHash();
+    }
+
+    public function updateHash(): void
+    {
         $this->hash = Str::random(10);
     }
 
-    public function redo()
+    public function redo(): void
     {
         if (! $this->canRedo()) {
             return;
@@ -69,10 +74,10 @@ class DropBlockEditor extends Component
 
         $this->activeBlocks = $this->history[$this->historyIndex]['activeBlocks'];
         $this->activeBlockIndex = $this->history[$this->historyIndex]['activeBlockIndex'];
-        $this->hash = Str::random(10);
+        $this->updateHash();
     }
 
-    public function recordInHistory()
+    public function recordInHistory(): void
     {
         $history = collect($this->history)
             ->slice(0, $this->historyIndex + 1)
@@ -88,14 +93,14 @@ class DropBlockEditor extends Component
         $this->historyIndex = count($this->history) - 1;
     }
 
-    public function blockUpdated($position, $data)
+    public function blockUpdated($position, $data): void
     {
         $this->activeBlocks[$position]['data'] = $data;
 
         $this->recordInHistory();
     }
 
-    public function parse($context)
+    public function parse($context): string
     {
         $parsers = config('dropblockeditor.parsers', []);
 
@@ -112,7 +117,7 @@ class DropBlockEditor extends Component
         return $output;
     }
 
-    public function process()
+    public function process(): void
     {
         $this->result = [
             'editor' => $this->parse('editor'),
@@ -120,14 +125,14 @@ class DropBlockEditor extends Component
         ];
     }
 
-    public function blockSelected($blockId)
+    public function blockSelected($blockId): void
     {
         $this->activeBlockIndex = $blockId;
 
         $this->recordInHistory();
     }
 
-    public function cloneBlock()
+    public function cloneBlock(): void
     {
         $clone = $this->activeBlocks[$this->activeBlockIndex];
 
@@ -138,7 +143,7 @@ class DropBlockEditor extends Component
         $this->recordInHistory();
     }
 
-    public function deleteBlock()
+    public function deleteBlock(): void
     {
         $activeBlockId = $this->activeBlockIndex;
 
@@ -164,20 +169,20 @@ class DropBlockEditor extends Component
             ->data($this->activeBlocks[$this->activeBlockIndex]['data']);
     }
 
-    public function mount()
+    public function mount(): void
     {
-        foreach (config('dropblockeditor.blocks', []) as $block) {
-            $this->blocks[] = (new $block)->toArray();
-        }
+        $this->blocks = collect(config('dropblockeditor.blocks', []))
+            ->map(fn($block) => (new $block)->toArray())
+            ->all();
 
         $this->buttons = config('dropblockeditor.buttons', []);
 
-        $this->hash = Str::random(10);
+        $this->updateHash();
 
         $this->recordInHistory();
     }
 
-    public function reorder($ids)
+    public function reorder($ids): void
     {
         $this->activeBlocks = collect($ids)
             ->map(function ($id) {
@@ -188,7 +193,7 @@ class DropBlockEditor extends Component
         $this->emit('editorIsUpdated', $this->updateProperties());
     }
 
-    public function insertBlock($id, $index = null, $placement = null)
+    public function insertBlock($id, $index = null, $placement = null): void
     {
         if ($index === null) {
             $block = $this->blocks[$id];
@@ -209,7 +214,7 @@ class DropBlockEditor extends Component
         $this->recordInHistory();
     }
 
-    public function prepareActiveBlockKey($activeBlockIndex)
+    public function prepareActiveBlockKey($activeBlockIndex): string
     {
         return "{$activeBlockIndex}-{$this->hash}";
     }

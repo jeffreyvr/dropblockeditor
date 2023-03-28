@@ -92,7 +92,7 @@ abstract class Parser
     public function createBaseView($attributes)
     {
         if (view()->exists($this->base)) {
-            view($this->base, $attributes)->render();
+            return view($this->base, $attributes)->render();
         }
 
         return Blade::render($this->base, $attributes);

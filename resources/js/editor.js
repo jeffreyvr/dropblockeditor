@@ -77,12 +77,8 @@ window.dropblockeditor = (config) => {
 
                     let insertingEl = document.querySelector('[inserting]')
 
-                    let component = Livewire.find(
-                        frame.closest('[wire\\:id]').getAttribute('wire:id')
-                    )
-
                     if (insertingEl != null) {
-                        component.call('insertBlock', insertingEl.dataset.block, 0)
+                        this.component().call('insertBlock', insertingEl.dataset.block, 0)
 
                         insertingEl = false;
 
@@ -133,14 +129,9 @@ window.dropblockeditor = (config) => {
                 })
 
                 el.addEventListener('dragenter', e => {
-
                     if (e.target.hasAttribute('drag-item')) {
                         e.target.setAttribute('is-target', true)
                     }
-
-                    // console.log(dragitem.getBoundingClientRect())
-                    // console.log(this.cursorPos)
-                    // console.log(upperHalf, bottomHalf)
                 })
 
                 el.addEventListener('dragleave', e => {
@@ -165,20 +156,14 @@ window.dropblockeditor = (config) => {
                         e.target.classList.remove(...this.insertAfterClasses, ...this.insertBeforeClasses);
                     }
 
-                    // let after = this.isBefore(root, e.target.closest('[drag-item]'), draggingEl)
+                    this.lastTopPos = root.documentElement.scrollTop
 
                     let placement = this.beforeOrAfterEl(e, e.target.closest('[drag-item]'))
 
-                    let component = Livewire.find(
-                        frame.closest('[wire\\:id]').getAttribute('wire:id')
-                    )
-
                     if (insertingEl != null) {
-                        component.call('insertBlock', insertingEl.dataset.block, e.target.closest('[drag-item]').dataset.block, placement)
+                        this.component().call('insertBlock', insertingEl.dataset.block, e.target.closest('[drag-item]').dataset.block, placement)
 
                         insertingEl = false;
-
-                        this.lastTopPos = root.documentElement.scrollTop
 
                         return
                     }
@@ -192,7 +177,7 @@ window.dropblockeditor = (config) => {
                     let orderIds = Array.from(root.querySelectorAll('[drag-item]'))
                         .map(itemEl => itemEl.dataset.block)
 
-                    component.call('reorder', orderIds)
+                    this.component().call('reorder', orderIds)
                 })
             })
         },
