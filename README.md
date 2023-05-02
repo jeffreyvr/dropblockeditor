@@ -74,20 +74,22 @@ In the below example, we create a Save button.
 ```php
 class ExampleButton extends Component
 {
-    public $editor;
+    public $activeBlocks;
 
     protected $listeners = [
-        'editorIsUpdated' => 'editorIsUpdated'
+        'editorIsUpdated' => 'editorIsUpdated',
     ];
 
-    public function editorIsUpdated($newEditor)
+    public function editorIsUpdated($properties)
     {
-        $this->editor = $newEditor;
+        $this->activeBlocks = $properties['activeBlocks'];
     }
 
     public function save()
     {
-        // do something on save
+        // Example of getting a json string of the active blocks.
+        // $activeBlocks = collect($this->activeBlocks)
+        //     ->toJson();
     }
 
     public function render()
