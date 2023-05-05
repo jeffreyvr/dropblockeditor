@@ -26,9 +26,9 @@ class DropBlockEditor extends Component
 
     public int $historyIndex = -1;
 
-    public $buttons = [];
+    public $buttons = null;
 
-    public $blocks = [];
+    public $blocks = null;
 
     protected $listeners = [
         'blockEditComponentSelected' => 'blockSelected',
@@ -171,11 +171,11 @@ class DropBlockEditor extends Component
 
     public function mount(): void
     {
-        $this->blocks = collect(config('dropblockeditor.blocks', []))
+        $this->blocks = collect(! is_null($this->blocks) ? $this->blocks : config('dropblockeditor.blocks', []))
             ->map(fn($block) => (new $block)->toArray())
             ->all();
 
-        $this->buttons = config('dropblockeditor.buttons', []);
+        $this->buttons = ! is_null($this->buttons) ? $this->buttons : config('dropblockeditor.buttons', []);
 
         $this->updateHash();
 

@@ -12,7 +12,7 @@
         x-data="dropblockeditor({
             mobile: false
         })"
-        class="flex flex-col min-h-screen bg-gray-100">
+        class="dropblockeditor flex flex-col min-h-screen bg-gray-100">
         <div class="{{ config('dropblockeditor.brand.colors.topbar_bg', 'bg-white') }} px-5 py-5 border-b text-white flex justify-between flex-initial">
             <div class="flex items-center">
                 @if($logo = config('dropblockeditor.brand.logo', false))

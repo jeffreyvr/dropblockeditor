@@ -80,6 +80,8 @@ window.dropblockeditor = (config) => {
                     if (insertingEl != null) {
                         this.component().call('insertBlock', insertingEl.dataset.block, 0)
 
+                        insertingEl.removeAttribute('inserting')
+
                         insertingEl = false;
 
                         return
@@ -162,6 +164,8 @@ window.dropblockeditor = (config) => {
 
                     if (insertingEl != null) {
                         this.component().call('insertBlock', insertingEl.dataset.block, e.target.closest('[drag-item]').dataset.block, placement)
+
+                        insertingEl.removeAttribute('inserting')
 
                         insertingEl = false;
 
