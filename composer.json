@@ -6,7 +6,7 @@
         "laravel",
         "dropblockeditor"
     ],
-    "homepage": "https://github.com/jeffreyvanrossum/dropblockeditor",
+    "homepage": "https://github.com/jeffreyvr/dropblockeditor",
     "license": "MIT",
     "authors": [
         {
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^8.0|^8.1",
+        "php": "^8.0|^8.1|^8.2",
         "illuminate/contracts": "^9.0|^10.0",
         "livewire/livewire": "^2.10",
         "spatie/laravel-package-tools": "^1.13.0"
