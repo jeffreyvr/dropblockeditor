@@ -27,7 +27,7 @@ return [
         'dropblockeditor-example-button',
     ],
 
-    'node_binary' => '/usr/local/bin/node',
+    'node_binary' => env('DROPBLOCKEDITOR_NODE_BINARY', '/usr/local/bin/node'),
 
-    'mjml_binary' => '../node_modules/.bin/mjml',
+    'mjml_binary' => env('DROPBLOCKEDITOR_MJML_BINARY', '../node_modules/.bin/mjml'),
 ];
