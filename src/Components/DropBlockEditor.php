@@ -5,6 +5,7 @@ namespace Jeffreyvr\DropBlockEditor\Components;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Jeffreyvr\DropBlockEditor\Blocks\Block;
+use Jeffreyvr\DropBlockEditor\Parsers\Parse;
 
 class DropBlockEditor extends Component
 {
@@ -15,6 +16,8 @@ class DropBlockEditor extends Component
     public $base = 'dropblockeditor::base';
 
     public $hash;
+
+    public $parsers = [];
 
     public $result;
 
@@ -100,29 +103,14 @@ class DropBlockEditor extends Component
         $this->recordInHistory();
     }
 
-    public function parse($context): string
-    {
-        $parsers = config('dropblockeditor.parsers', []);
-
-        $output = '';
-
-        foreach ($parsers as $parser) {
-            $output = (new $parser($output, $this->activeBlocks))
-                ->base($this->base)
-                ->context($context)
-                ->parse()
-                ->output();
-        }
-
-        return $output;
-    }
-
     public function process(): void
     {
-        $this->result = [
-            'editor' => $this->parse('editor'),
-            'rendered' => $this->parse('rendered'),
-        ];
+        $this->result = Parse::execute([
+            'activeBlocks' => $this->activeBlocks,
+            'base' => $this->base,
+            'context' => 'editor',
+            'parsers' => $this->parsers,
+        ]);
     }
 
     public function blockSelected($blockId): void
@@ -171,6 +159,8 @@ class DropBlockEditor extends Component
 
     public function mount(): void
     {
+        $this->parsers = config('dropblockeditor.parsers', []);
+
         $this->blocks = collect(! is_null($this->blocks) ? $this->blocks : config('dropblockeditor.blocks', []))
             ->map(fn($block) => (new $block)->toArray())
             ->all();
@@ -222,7 +212,8 @@ class DropBlockEditor extends Component
     public function updateProperties(): array
     {
         return [
-            'result' => $this->result,
+            'base' => $this->base,
+            'parsers' => $this->parsers,
             'activeBlocks' => $this->activeBlocks
         ];
     }

@@ -27,7 +27,17 @@ return [
         'dropblockeditor-example-button',
     ],
 
-    'node_binary' => env('DROPBLOCKEDITOR_NODE_BINARY', '/usr/local/bin/node'),
+    'mjml' => [
+        'method' => env('DROPBLOCKEDITOR_MJML_METHOD', 'api'),
 
-    'mjml_binary' => env('DROPBLOCKEDITOR_MJML_BINARY', '../node_modules/.bin/mjml'),
+        'binary' => env('DROPBLOCKEDITOR_MJML_BINARY', '../node_modules/.bin/mjml'),
+
+        'api' => [
+            'url' => env('DROPBLOCKEDITOR_MJML_API_URL', 'https://api.mjml.io/v1/render'),
+            'username' => env('DROPBLOCKEDITOR_MJML_API_USERNAME'),
+            'password' => env('DROPBLOCKEDITOR_MJML_API_PASSWORD'),
+        ],
+    ],
+
+    'node_binary' => env('DROPBLOCKEDITOR_NODE_BINARY', '/usr/local/bin/node'),
 ];

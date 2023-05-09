@@ -2,7 +2,6 @@
     @isset($jsPath)
         <script>{!! file_get_contents($jsPath) !!}</script>
     @endisset
-
     @isset($cssPath)
         <style>{!! file_get_contents($cssPath) !!}</style>
     @endisset
@@ -44,7 +43,7 @@
         <div class="flex flex-initial h-full grow">
 
             <div class="relative flex-1 flex justify-center">
-                <iframe id="frame" srcdoc="{{ $result['editor'] }}" class="h-full" :class="mobile ? 'w-[320px]' : 'w-full'"></iframe>
+                <iframe id="frame" srcdoc="{{ $result }}" class="h-full" :class="mobile ? 'w-[320px]' : 'w-full'"></iframe>
                 <div class="absolute right-4 top-4 flex items-center bg-white rounded-md border shadow-sm">
                     <button x-on:click="mobile = true" class="p-2 border-r" :class="mobile ? 'text-gray-800' : 'text-gray-300'">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">

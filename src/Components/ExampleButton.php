@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class ExampleButton extends Component
 {
-    public $activeBlocks;
+    public $properties;
 
     protected $listeners = [
         'editorIsUpdated' => 'editorIsUpdated',
@@ -14,13 +14,13 @@ class ExampleButton extends Component
 
     public function editorIsUpdated($properties)
     {
-        $this->activeBlocks = $properties['activeBlocks'];
+        $this->properties = $properties;
     }
 
     public function save()
     {
         // Example of getting a json string of the active blocks.
-        // $activeBlocks = collect($activeBlocks)
+        // $activeBlocks = collect($properties['activeBlocks'])
         //     ->toJson();
     }
 

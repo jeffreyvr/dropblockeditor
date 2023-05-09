@@ -2,10 +2,11 @@
 
 namespace Jeffreyvr\DropBlockEditor\Parsers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Blade;
+use Symfony\Component\Process\Process;
 use Jeffreyvr\DropBlockEditor\Blocks\Block;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 class Mjml extends Parser implements ParserInterface
 {
@@ -14,7 +15,7 @@ class Mjml extends Parser implements ParserInterface
         $content = '<mj-raw>'.$this->dropPlaceholderHtml().'</mj-raw>';
 
         $blocks = collect($this->blocks)
-            ->map(function($block) {
+            ->map(function ($block) {
                 return Block::fromName($block['class'])
                     ->data($block['data']);
             })
@@ -38,9 +39,22 @@ class Mjml extends Parser implements ParserInterface
 
         $content = $this->createBaseView(['slot' => $content]);
 
+        $method = config('dropblockeditor.mjml.method');
+
+        if ($method === 'api') {
+            $this->output = $this->parseWithApi($content);
+        } elseif ($method === 'node') {
+            $this->output = $this->parseWithNode($content);
+        }
+
+        return $this;
+    }
+
+    public function parseWithNode($content)
+    {
         $process = new Process([
             config('dropblockeditor.node_binary'),
-            config('dropblockeditor.mjml_binary'),
+            config('dropblockeditor.mjml.binary'),
             '--noStdoutFileComment',
             '--stdin',
             '--s',
@@ -54,8 +68,18 @@ class Mjml extends Parser implements ParserInterface
             throw new ProcessFailedException($process);
         }
 
-        $this->output = $process->getOutput();
-
-        return $this;
+        return $process->getOutput();
     }
+
+    public function parseWithApi($content)
+    {
+        $mjml = Http::withBasicAuth(config('dropblockeditor.mjml.api.username'), config('dropblockeditor.mjml.api.password'))
+            ->post(config('dropblockeditor.mjml.api.url'), [
+                'mjml' => $content,
+            ])
+            ->json();
+
+        return $mjml['html'];
+    }
+
 }
