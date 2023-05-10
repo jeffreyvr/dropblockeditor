@@ -1,8 +1,8 @@
 <p><img src="./art/logo.svg" alt="Logo DropBlockEditor"></p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvr/dropblockeditor.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanrossum/dropblockeditor)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/jeffreyvr/dropblockeditor/run-tests?label=tests)](https://github.com/jeffreyvr/dropblockeditor/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvr/dropblockeditor.svg?style=flat-square)](https://packagist.org/packages/jeffreyvr/dropblockeditor)
+[![Build Status](https://github.com/jeffreyvr/dropblockeditor/workflows/run-tests/badge.svg?label=tests)](https://github.com/jeffreyvr/dropblockeditor/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvr/dropblockeditor.svg)](https://packagist.org/packages/jeffreyvr/dropblockeditor)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvr/dropblockeditor.svg)](https://packagist.org/packages/jeffreyvanrossum/dropblockeditor)
 
 ## Introduction
 
