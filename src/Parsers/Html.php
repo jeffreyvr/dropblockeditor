@@ -31,7 +31,7 @@ class Html extends Parser implements ParserInterface
             $content = $blocks->implode("\n");
         }
 
-        $this->output = view($this->base, ['slot' => $content])->render();
+        $this->output = $this->createBaseView(['slot' => $content]);
 
         return $this;
     }
