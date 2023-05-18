@@ -40,12 +40,12 @@ class MakeBlockCommand extends Command
 
     public function getBlockSourceFilePath()
     {
-        return base_path('App/DropBlockEditor/Blocks').'/'.$this->getSingularClassName($this->argument('name')).'.php';
+        return base_path('app/DropBlockEditor/Blocks').'/'.$this->getSingularClassName($this->argument('name')).'.php';
     }
 
     public function getEditComponentSourceFilePath()
     {
-        return base_path('App/Http/Livewire').'/'.$this->getSingularClassName($this->argument('name')).'.php';
+        return base_path('app/Http/Livewire').'/'.$this->getSingularClassName($this->argument('name')).'.php';
     }
 
     public function handle(): int
