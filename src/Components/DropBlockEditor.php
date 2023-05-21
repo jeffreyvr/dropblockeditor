@@ -11,7 +11,7 @@ class DropBlockEditor extends Component
 {
     public $initialRender = true;
 
-    public $title;
+    public $title = 'Example title';
 
     public $base = 'dropblockeditor::base';
 
@@ -214,6 +214,7 @@ class DropBlockEditor extends Component
         return [
             'base' => $this->base,
             'parsers' => $this->parsers,
+            'title' => $this->title,
             'activeBlocks' => $this->activeBlocks
         ];
     }

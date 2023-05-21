@@ -13,12 +13,12 @@
         })"
         class="dropblockeditor flex flex-col min-h-screen bg-gray-100">
         <div class="{{ config('dropblockeditor.brand.colors.topbar_bg', 'bg-white') }} px-5 py-5 border-b text-white flex justify-between flex-initial">
-            <div class="flex items-center">
+            <div class="flex grow items-center">
                 @if($logo = config('dropblockeditor.brand.logo', false))
                     <div class="mr-2 h-6 w-6">{!! $logo !!}</div>
                 @endif
-                <div>
-                    {{ $title ?? __('No title') }}
+                <div class="w-full">
+                    <input class="border-0 w-full" wire:model.debounce.500ms="title" type="text" value="{{ $title ?? __('No title') }}">
                 </div>
             </div>
             <div class="flex items-center gap-2">
