@@ -15,7 +15,7 @@
         <div class="{{ config('dropblockeditor.brand.colors.topbar_bg', 'bg-white') }} px-5 py-5 border-b text-white flex justify-between flex-initial">
             <div class="flex items-center">
                 @if($logo = config('dropblockeditor.brand.logo', false))
-                    <div class="mr-2">{!! $logo !!}</div>
+                    <div class="mr-2 h-6 w-6">{!! $logo !!}</div>
                 @endif
                 <div>
                     {{ $title ?? __('No title') }}
