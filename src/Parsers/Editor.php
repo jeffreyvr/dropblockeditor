@@ -22,8 +22,8 @@ class Editor extends Parser implements ParserInterface
 
         $configCss = config('dropblockeditor.preview_css');
 
-        if ($configCss && file_exists(public_path() . '/' . $configCss)) {
-            $editorCss = file_get_contents(public_path() . '/' . $configCss);
+        if ($configCss && file_exists(public_path($configCss))) {
+            $editorCss = file_get_contents(public_path($configCss));
         } else {
             $editorCss = file_get_contents(__DIR__ . '/../../public/editor.css');
         };
