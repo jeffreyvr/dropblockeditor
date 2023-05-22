@@ -20,8 +20,16 @@ class Editor extends Parser implements ParserInterface
 
         libxml_use_internal_errors($internalErrors);
 
-        // Injecting CSS into the editor frame.
-        $styleElement = $dom->createElement('style', htmlentities(file_get_contents(__DIR__.'/../../public/editor.css')));
+        $configCss = config('dropblockeditor.preview_css');
+
+        if ($configCss && file_exists(public_path($configCss))) {
+            $editorCss = file_get_contents(public_path($configCss));
+        } else {
+            $editorCss = file_get_contents(__DIR__ . '/../../public/editor.css');
+        };
+
+        // Injecting CSS into the preview frame.
+        $styleElement = $dom->createElement('style', htmlentities($editorCss));
         $styleElement->setAttribute('type', 'text/css');
 
         $head = $dom->getElementsByTagName('head')->item(0);
