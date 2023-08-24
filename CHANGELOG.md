@@ -4,7 +4,7 @@ All notable changes to `dropblockeditor` will be documented in this file.
 
 ## Unreleased
 
--
+- upgrade to Livewire v3
 
 ## 0.1.3 - 2022-06-23
 

@@ -180,7 +180,7 @@ class DropBlockEditor extends Component
             })
             ->all();
 
-        $this->emit('editorIsUpdated', $this->updateProperties());
+        $this->dispatch('editorIsUpdated', $this->updateProperties());
     }
 
     public function insertBlock($id, $index = null, $placement = null): void
@@ -223,7 +223,7 @@ class DropBlockEditor extends Component
         $this->process();
 
         if (! $this->initialRender) {
-            $this->emit('editorIsUpdated', $this->updateProperties());
+            $this->dispatch('editorIsUpdated', $this->updateProperties());
         }
 
         $this->initialRender = false;

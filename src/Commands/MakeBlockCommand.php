@@ -45,7 +45,9 @@ class MakeBlockCommand extends Command
 
     public function getEditComponentSourceFilePath()
     {
-        return base_path('app/Http/Livewire').'/'.$this->getSingularClassName($this->argument('name')).'.php';
+        $path = str_replace(['App', '\\'], ['app', '/'], config('livewire.class_namespace'));
+
+        return base_path($path).'/'.$this->getSingularClassName($this->argument('name')).'.php';
     }
 
     public function handle(): int
@@ -81,7 +83,7 @@ class MakeBlockCommand extends Command
             $this->makeDirectory(dirname($blockEditComponentPath));
 
             File::put($blockEditComponentPath, $this->getStubContents(__DIR__.'/edit-component.stub', [
-                'namespace' => 'App\\Http\\Livewire',
+                'namespace' => config('livewire.class_namespace'),
                 'name' => Str::studly($this->argument('name')),
             ]));
 

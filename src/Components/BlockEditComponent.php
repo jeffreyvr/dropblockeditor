@@ -21,6 +21,6 @@ class BlockEditComponent extends Component
 
     public function updated()
     {
-        $this->emitUp('blockEditComponentUpdated', $this->position, $this->data);
+        $this->dispatch('blockEditComponentUpdated', $this->position, $this->data);
     }
 }

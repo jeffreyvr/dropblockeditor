@@ -55,12 +55,8 @@ abstract class Block
     public function toArray()
     {
         return [
-            // 'title' => $this->title,
             'data' => $this->data,
             'class' => get_class($this),
-            // 'view' => $this->makeView(),
-            // 'blockEditComponent' => $this->blockEditComponent,
-            // 'icon' => $this->icon,
         ];
     }
 }
