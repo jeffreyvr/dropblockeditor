@@ -10,6 +10,8 @@ The DropBlockEditor package provides you with a cool drag and drop editor. It al
 
 > Note: This package is in the pre-release stage. Code is subject to change and should not considered stable at this time.
 
+> To use with Livewire v2, use version <= 0.1.3.
+
 ## Documentation
 
 Documentation for DropBlockEditor can be found on the [DropBlockEditor website](https://dropblockeditor.com).
