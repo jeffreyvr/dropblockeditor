@@ -4,9 +4,9 @@ namespace Jeffreyvr\DropBlockEditor;
 
 use Illuminate\Support\Facades\View;
 use Jeffreyvr\DropBlockEditor\Commands\MakeBlockCommand;
+use Jeffreyvr\DropBlockEditor\Components\DropBlockEditor;
 use Jeffreyvr\DropBlockEditor\Components\Example;
 use Jeffreyvr\DropBlockEditor\Components\ExampleButton;
-use Jeffreyvr\DropBlockEditor\Components\DropBlockEditor;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

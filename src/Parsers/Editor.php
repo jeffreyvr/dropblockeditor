@@ -25,8 +25,8 @@ class Editor extends Parser implements ParserInterface
         if ($configCss && file_exists(public_path($configCss))) {
             $editorCss = file_get_contents(public_path($configCss));
         } else {
-            $editorCss = file_get_contents(__DIR__ . '/../../public/editor.css');
-        };
+            $editorCss = file_get_contents(__DIR__.'/../../public/editor.css');
+        }
 
         // Injecting CSS into the preview frame.
         $styleElement = $dom->createElement('style', htmlentities($editorCss));

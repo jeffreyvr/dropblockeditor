@@ -32,7 +32,6 @@ it('displays the active block', function () {
         ->assertSee('Drop it like it\'s hot');
 });
 
-
 it('can undo and redo a change', function () {
     Livewire::test(DropBlockEditor::class, [
         'title' => 'The name of the campaign',

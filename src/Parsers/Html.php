@@ -12,7 +12,7 @@ class Html extends Parser implements ParserInterface
         $content = $this->dropPlaceholderHtml();
 
         $blocks = collect($this->blocks)
-            ->map(function($block) {
+            ->map(function ($block) {
                 return Block::fromName($block['class'])
                     ->data($block['data']);
             })

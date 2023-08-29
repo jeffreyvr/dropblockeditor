@@ -5,6 +5,7 @@ All notable changes to `dropblockeditor` will be documented in this file.
 ## Unreleased
 
 - upgrade to Livewire v3
+- `php artisan dropblockeditor:make` puts Livewire component in `App\Livewire` namespace unless otherwise configured
 
 ## 0.1.3 - 2022-06-23
 

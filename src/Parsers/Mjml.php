@@ -2,11 +2,11 @@
 
 namespace Jeffreyvr\DropBlockEditor\Parsers;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Blade;
-use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Http;
 use Jeffreyvr\DropBlockEditor\Blocks\Block;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class Mjml extends Parser implements ParserInterface
 {
@@ -81,5 +81,4 @@ class Mjml extends Parser implements ParserInterface
 
         return $mjml['html'];
     }
-
 }

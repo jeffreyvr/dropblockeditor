@@ -2,10 +2,10 @@
 
 namespace Jeffreyvr\DropBlockEditor\Components;
 
-use Livewire\Component;
 use Illuminate\Support\Str;
 use Jeffreyvr\DropBlockEditor\Blocks\Block;
 use Jeffreyvr\DropBlockEditor\Parsers\Parse;
+use Livewire\Component;
 
 class DropBlockEditor extends Component
 {
@@ -162,7 +162,7 @@ class DropBlockEditor extends Component
         $this->parsers = config('dropblockeditor.parsers', []);
 
         $this->blocks = collect(! is_null($this->blocks) ? $this->blocks : config('dropblockeditor.blocks', []))
-            ->map(fn($block) => (new $block)->toArray())
+            ->map(fn ($block) => (new $block)->toArray())
             ->all();
 
         $this->buttons = ! is_null($this->buttons) ? $this->buttons : config('dropblockeditor.buttons', []);
@@ -214,7 +214,7 @@ class DropBlockEditor extends Component
         return [
             'base' => $this->base,
             'parsers' => $this->parsers,
-            'activeBlocks' => $this->activeBlocks
+            'activeBlocks' => $this->activeBlocks,
         ];
     }
 
@@ -229,7 +229,7 @@ class DropBlockEditor extends Component
         $this->initialRender = false;
 
         return view('dropblockeditor::editor', [
-            'activeBlock' => $this->getActiveBlock()
+            'activeBlock' => $this->getActiveBlock(),
         ]);
     }
 }

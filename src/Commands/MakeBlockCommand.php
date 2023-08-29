@@ -2,10 +2,10 @@
 
 namespace Jeffreyvr\DropBlockEditor\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Illuminate\Support\Pluralizer;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Pluralizer;
+use Illuminate\Support\Str;
 
 class MakeBlockCommand extends Command
 {
