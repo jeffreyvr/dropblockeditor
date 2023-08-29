@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class MakeBlockCommand extends Command
 {
-    public $signature = 'dropblockeditor:make {name} {--with-edit-component}';
+    public $signature = 'dropblockeditor:make {name} {--without-edit-component}';
 
     public $description = 'Create a new editor block';
 
@@ -50,32 +50,41 @@ class MakeBlockCommand extends Command
         return base_path($path).'/'.$this->getSingularClassName($this->argument('name')).'.php';
     }
 
+    public function isFirstTimeMakingABlock()
+    {
+        return ! File::isDirectory(base_path('app/DropBlockEditor/Blocks'));
+    }
+
     public function handle(): int
     {
+        $isFirstBlock = $this->isFirstTimeMakingABlock();
         $blockPath = $this->getBlockSourceFilePath();
-        $withEditComponent = $this->option('with-edit-component', false);
+        $withoutEditComponent = $this->option('without-edit-component', false);
 
         if (File::exists($blockPath)) {
-            $this->error("Block already exists at: {$blockPath}");
+            $this->line("<options=bold,reverse;fg=red> Uh-oh! </> 🫢 \n");
+            $this->line("<fg=red;options=bold>A block with this name already exists at:</> {$blockPath}");
 
             return self::FAILURE;
         }
 
         $this->makeDirectory(dirname($blockPath));
 
-        File::put($blockPath, $this->getStubContents(__DIR__.'/'.($withEditComponent ? 'block.edit-component.stub' : 'block.stub'), [
+        File::put($blockPath, $this->getStubContents(__DIR__.'/'.($withoutEditComponent ? 'block.stub' : 'block.edit-component.stub'), [
             'namespace' => 'App\\DropBlockEditor\\Blocks',
             'name' => Str::studly($this->argument('name')),
             'edit-component-name' => Str::kebab($this->argument('name')),
         ]));
 
-        $this->info("Block created at: {$blockPath}");
+        $this->line("<options=bold,reverse;fg=green> Block created </> 🚀\n");
+        $this->line("<options=bold;fg=green>BLOCK PATH:</> {$blockPath}");
 
-        if ($withEditComponent) {
+        if (! $withoutEditComponent) {
             $blockEditComponentPath = $this->getEditComponentSourceFilePath();
 
             if (File::exists($blockEditComponentPath)) {
-                $this->error("Edit component already exists at: {$blockEditComponentPath}");
+                $this->line("<options=bold,reverse;fg=red> Uh-oh! </> 🫢 \n");
+                $this->line("<fg=red;options=bold>A Livewire component with this name already exists at:</> {$blockEditComponentPath}");
 
                 return self::FAILURE;
             }
@@ -87,7 +96,11 @@ class MakeBlockCommand extends Command
                 'name' => Str::studly($this->argument('name')),
             ]));
 
-            $this->info("Edit component created at: {$blockEditComponentPath}");
+            $this->line("<options=bold;fg=green>EDIT COMPONENT PATH:</> {$blockEditComponentPath}");
+        }
+
+        if ($isFirstBlock) {
+            $this->line("\n<options=bold>Awesome, your first DropBlockEditor block has been created!</> 🎉\n");
         }
 
         return self::SUCCESS;
