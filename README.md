@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvr/dropblockeditor.svg)](https://packagist.org/packages/jeffreyvr/dropblockeditor)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvr/dropblockeditor.svg)](https://packagist.org/packages/jeffreyvanrossum/dropblockeditor)
 
-## Introduction
+## Introduction Here
 
 The DropBlockEditor package provides you with a cool drag and drop editor. It allows you to easily create your own custom blocks and make them editable through Livewire components.
 
