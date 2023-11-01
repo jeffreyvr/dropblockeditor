@@ -12,6 +12,8 @@ abstract class Block
 
     public $blockEditComponent;
 
+    public $category = 'Example Category';
+
     public $data = [];
 
     abstract public function render();
@@ -24,6 +26,11 @@ abstract class Block
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     public function getData()
@@ -57,6 +64,7 @@ abstract class Block
         return [
             'data' => $this->data,
             'class' => get_class($this),
+            'category' => $this->category,
         ];
     }
 }
