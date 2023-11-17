@@ -6,8 +6,7 @@ window.dropblockeditor = (config) => {
 
         insert: false,
 
-        mobile: false,
-        tablet: false,
+        device: 'desktop',
 
         lastTopPos: 0,
 

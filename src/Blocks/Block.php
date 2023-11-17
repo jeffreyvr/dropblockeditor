@@ -12,7 +12,7 @@ abstract class Block
 
     public $blockEditComponent;
 
-    public $category = 'Example Category';
+    public $category = null;
 
     public $data = [];
 
