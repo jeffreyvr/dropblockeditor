@@ -8,9 +8,7 @@
 
     <div
         x-cloak
-        x-data="dropblockeditor({
-            mobile: false
-        })"
+        x-data="dropblockeditor()"
         class="dropblockeditor flex flex-col min-h-screen bg-gray-100">
         <div class="{{ config('dropblockeditor.brand.colors.topbar_bg', 'bg-white') }} px-5 py-5 border-b text-white flex justify-between flex-initial">
             <div class="flex items-center">
@@ -43,15 +41,21 @@
         <div class="flex flex-initial h-full grow">
 
             <div class="relative flex-1 flex justify-center">
-                <iframe id="frame" srcdoc="{{ $result }}" class="h-full" :class="mobile ? 'w-[320px]' : 'w-full'"></iframe>
+                <iframe id="frame" srcdoc="{{ $result }}" class="h-full" :class="device === 'mobile' ? 'w-[320px]' : device === 'tablet' ? 'w-[768px]' : 'w-full'"></iframe>
                 <div class="absolute right-4 top-4 flex items-center bg-white rounded-md border shadow-sm">
-                    <button x-on:click="mobile = true" class="p-2 border-r" :class="mobile ? 'text-gray-800' : 'text-gray-300'">
+                    <button x-on:click="device = 'mobile'" class="p-2 border-r" :class="device === 'mobile' ? 'text-gray-800' : 'text-gray-300'">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
                         </svg>
                     </button>
 
-                    <button x-on:click="mobile = false" class="p-2" :class="mobile ? 'text-gray-300' : 'text-gray-800'">
+                    <button x-on:click="device = 'tablet'" class="p-2 border-r" :class="device === 'tablet' ? 'text-gray-800' : 'text-gray-300'">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z" />
+                        </svg>
+                    </button>
+
+                    <button x-on:click="device = 'desktop'" class="p-2" :class="device === 'desktop' ? 'text-gray-800' : 'text-gray-300'">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
                         </svg>
@@ -109,20 +113,45 @@
                     </div>
                 </div>
                 @else
-                <div drop-list class="grid grid-cols-3 gap-4 mb-6 p-4">
-                    @foreach(collect($blocks)->map(function($block) {
-                        return $this->getBlockFromClassName($block['class']);
-                    }) as $i => $block)
-                        <div drag-item draggable="true" data-block="{{ $i }}" class="shadow-sm mb-2 text-center bg-white border border-gray-100 rounded-lg px-3 py-2 flex flex-col justify-center items-center cursor-grab active:cursor-grabbing hover:border-gray-200">
-                            @if($block->getIcon())
-                                <div class="opacity-50 mb-1">{!! $block->getIcon() !!}</div>
+                <div drop-list class="flex flex-col pb-4">
+                    @php
+                        $blockGroups = collect($blocks)->map(function($block, $i) {
+                            return [
+                                'original_index' => $i,
+                                'block' => $this->getBlockFromClassName($block['class']),
+                            ];
+                        })->groupBy(function($item) {
+                            return $item['block']->getCategory();
+                        })->sortBy(function($item, $key) {
+                            return $key;
+                        })->toArray();
+                    @endphp
+
+                    @foreach($blockGroups as $category => $categoryBlocks)
+                        <div class="px-4 pt-4">
+                            @if($category)
+                            <h2 class="mb-2 font-medium">{{ $category }}</h2>
                             @endif
+                            <div class="grid grid-cols-3 gap-4">
+                                @foreach($categoryBlocks as $groupedBlock)
+                                    @php
+                                        $i = $groupedBlock['original_index'];
+                                        $block = $groupedBlock['block'];
+                                    @endphp
 
-                            <span class="text-sm">{{ $block->getTitle() }}</span>
+                                    <div drag-item draggable="true" data-block="{{ $i }}" class="shadow-sm mb-2 text-center bg-white border border-gray-100 rounded-lg px-3 py-2 flex flex-col justify-center items-center cursor-grab active:cursor-grabbing hover:border-gray-200">
+                                        @if($block->getIcon())
+                                            <div class="opacity-50 mb-1">{!! $block->getIcon() !!}</div>
+                                        @endif
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-25 w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                            </svg>
+                                        <span class="text-sm">{{ $block->getTitle() }}</span>
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-25 w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                        </svg>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     @endforeach
                 </div>
