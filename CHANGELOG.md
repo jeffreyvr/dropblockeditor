@@ -4,6 +4,10 @@ All notable changes to `dropblockeditor` will be documented in this file.
 
 ## Unreleased
 
+## 0.3.1 - 2024-03-06
+
+- hide blocks sidebar with x-show to prevent dom changes (related to https://github.com/jeffreyvr/dropblockeditor/discussions/30)
+
 ## 0.3.0 - 2023-11-17
 
 - added tablet preview (thanks @JesusChrist69)
