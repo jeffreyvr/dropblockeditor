@@ -70,6 +70,53 @@
             </div>
 
             <aside class="w-[400px] shrink-0 shadow-lg relative bg-white">
+                <div
+                    drop-list
+                    x-cloak
+                    x-show="! $wire.activeBlockIndex"
+                    class="flex flex-col pb-4">
+                    @php
+                        $blockGroups = collect($blocks)->map(function($block, $i) {
+                            return [
+                                'original_index' => $i,
+                                'block' => $this->getBlockFromClassName($block['class']),
+                            ];
+                        })->groupBy(function($item) {
+                            return $item['block']->getCategory();
+                        })->sortBy(function($item, $key) {
+                            return $key;
+                        })->toArray();
+                    @endphp
+
+                    @foreach($blockGroups as $category => $categoryBlocks)
+                        <div class="px-4 pt-4">
+                            @if($category)
+                            <h2 class="mb-2 font-medium">{{ $category }}</h2>
+                            @endif
+                            <div class="grid grid-cols-3 gap-4">
+                                @foreach($categoryBlocks as $groupedBlock)
+                                    @php
+                                        $i = $groupedBlock['original_index'];
+                                        $block = $groupedBlock['block'];
+                                    @endphp
+
+                                    <div drag-item draggable="true" data-block="{{ $i }}" class="shadow-sm mb-2 text-center bg-white border border-gray-100 rounded-lg px-3 py-2 flex flex-col justify-center items-center cursor-grab active:cursor-grabbing hover:border-gray-200">
+                                        @if($block->getIcon())
+                                            <div class="opacity-50 mb-1">{!! $block->getIcon() !!}</div>
+                                        @endif
+
+                                        <span class="text-sm">{{ $block->getTitle() }}</span>
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-25 w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                        </svg>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
                 @if($activeBlock)
                 <div class="border-b mb-4">
                     <div class="border-b bg-white flex justify-between items-center">
@@ -111,49 +158,6 @@
                             {{ __('This block is not editable.') }}
                         @endif
                     </div>
-                </div>
-                @else
-                <div drop-list class="flex flex-col pb-4">
-                    @php
-                        $blockGroups = collect($blocks)->map(function($block, $i) {
-                            return [
-                                'original_index' => $i,
-                                'block' => $this->getBlockFromClassName($block['class']),
-                            ];
-                        })->groupBy(function($item) {
-                            return $item['block']->getCategory();
-                        })->sortBy(function($item, $key) {
-                            return $key;
-                        })->toArray();
-                    @endphp
-
-                    @foreach($blockGroups as $category => $categoryBlocks)
-                        <div class="px-4 pt-4">
-                            @if($category)
-                            <h2 class="mb-2 font-medium">{{ $category }}</h2>
-                            @endif
-                            <div class="grid grid-cols-3 gap-4">
-                                @foreach($categoryBlocks as $groupedBlock)
-                                    @php
-                                        $i = $groupedBlock['original_index'];
-                                        $block = $groupedBlock['block'];
-                                    @endphp
-
-                                    <div drag-item draggable="true" data-block="{{ $i }}" class="shadow-sm mb-2 text-center bg-white border border-gray-100 rounded-lg px-3 py-2 flex flex-col justify-center items-center cursor-grab active:cursor-grabbing hover:border-gray-200">
-                                        @if($block->getIcon())
-                                            <div class="opacity-50 mb-1">{!! $block->getIcon() !!}</div>
-                                        @endif
-
-                                        <span class="text-sm">{{ $block->getTitle() }}</span>
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-25 w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                        </svg>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
                 </div>
                 @endif
             </aside>
