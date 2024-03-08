@@ -19,7 +19,6 @@ class DropBlockEditorServiceProvider extends PackageServiceProvider
             ->name('dropblockeditor')
             ->hasConfigFile()
             ->hasViews()
-            // ->hasMigration('create_dropblockeditor_table')
             ->hasCommand(MakeBlockCommand::class);
     }
 
