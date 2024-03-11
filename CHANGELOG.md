@@ -4,6 +4,9 @@ All notable changes to `dropblockeditor` will be documented in this file.
 
 ## Unreleased
 
+- getting ready for laravel 11 (thanks @abr4xas)
+- added types (⚠️ potential breaking change) (thanks @abr4xas)
+
 ## 0.3.1 - 2024-03-06
 
 - hide blocks sidebar with x-show to prevent dom changes (related to https://github.com/jeffreyvr/dropblockeditor/discussions/30)

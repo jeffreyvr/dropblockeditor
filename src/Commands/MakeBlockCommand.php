@@ -22,12 +22,12 @@ class MakeBlockCommand extends Command
         return $path;
     }
 
-    public function getSingularClassName($name)
+    public function getSingularClassName($name): string
     {
         return ucwords(Pluralizer::singular($name));
     }
 
-    public function getStubContents($stub, $stubVariables = [])
+    public function getStubContents($stub, $stubVariables = []): array|bool|string
     {
         $contents = file_get_contents($stub);
 
@@ -38,19 +38,19 @@ class MakeBlockCommand extends Command
         return $contents;
     }
 
-    public function getBlockSourceFilePath()
+    public function getBlockSourceFilePath(): string
     {
         return base_path('app/DropBlockEditor/Blocks').'/'.$this->getSingularClassName($this->argument('name')).'.php';
     }
 
-    public function getEditComponentSourceFilePath()
+    public function getEditComponentSourceFilePath(): string
     {
         $path = str_replace(['App', '\\'], ['app', '/'], config('livewire.class_namespace'));
 
         return base_path($path).'/'.$this->getSingularClassName($this->argument('name')).'.php';
     }
 
-    public function isFirstTimeMakingABlock()
+    public function isFirstTimeMakingABlock(): bool
     {
         return ! File::isDirectory(base_path('app/DropBlockEditor/Blocks'));
     }
@@ -59,7 +59,7 @@ class MakeBlockCommand extends Command
     {
         $isFirstBlock = $this->isFirstTimeMakingABlock();
         $blockPath = $this->getBlockSourceFilePath();
-        $withoutEditComponent = $this->option('without-edit-component', false);
+        $withoutEditComponent = $this->option('without-edit-component');
 
         if (File::exists($blockPath)) {
             $this->line("<options=bold,reverse;fg=red> Uh-oh! </> 🫢 \n");

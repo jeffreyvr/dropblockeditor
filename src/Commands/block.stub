@@ -6,9 +6,9 @@ use Jeffreyvr\DropBlockEditor\Blocks\Block;
 
 class [name] extends Block
 {
-    public $title = '[name]';
+    public string $title = '[name]';
 
-    public $data = [];
+    public array $data = [];
 
     public function render()
     {

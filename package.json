@@ -1,11 +1,11 @@
 {
   "devDependencies": {
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.18",
     "laravel-mix": "^6.0.49",
-    "postcss": "^8.4.18",
-    "tailwindcss": "^3.2.2"
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
   },
   "dependencies": {
-    "webpack": "^5.75.0"
+    "webpack": "^5.90.3"
   }
 }
